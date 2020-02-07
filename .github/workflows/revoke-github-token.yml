@@ -1,0 +1,15 @@
+name: revoke-github-token
+
+on: repository_dispatch
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Revoke GITHUB_TOKEN instances
+      env:
+        SECRETS_CONTEXT_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_CONTEXT_TOKEN: ${{github.token}}
+      run: |
+        curl -v -X DELETE -H "Authorization: $SECRETS_CONTEXT_TOKEN" "https://api.github.com/installation/token"
+        curl -v -X DELETE -H "Authorization: $GITHUB_CONTEXT_TOKEN" "https://api.github.com/installation/token"
