@@ -9,7 +9,7 @@ jobs:
       SECRETS_CONTEXT_TOKEN: ${{secrets.GITHUB_TOKEN}}
       GITHUB_CONTEXT_TOKEN: ${{github.token}}
     steps:
-    - run: |
-        curl -v -X DELETE -H "Authorization: $SECRETS_CONTEXT_TOKEN" -H "Accept: application/vnd.github.gambit-preview+json" "https://api.github.com/installation/token"
-    - run: |
-        curl -v -X DELETE -H "Authorization: $GITHUB_CONTEXT_TOKEN" -H "Accept: application/vnd.github.gambit-preview+json" "https://api.github.com/installation/token"
+    - name: Revoke tokens 
+      run: |
+        curl -v -X DELETE -H "Authorization: bearer $SECRETS_CONTEXT_TOKEN" -H "Accept: application/vnd.github.gambit-preview+json" "https://api.github.com/installation/token"
+        curl -v -X DELETE -H "Authorization: bearer $GITHUB_CONTEXT_TOKEN" -H "Accept: application/vnd.github.gambit-preview+json" "https://api.github.com/installation/token"
